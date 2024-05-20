@@ -1,6 +1,20 @@
+using Auth0.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore;
+using UniversumSchoolManagement.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<UniversumDbContext>(options => 
+    options.UseSqlServer(builder.Configuration
+    .GetConnectionString("UniversumConnectionString")));
+
+builder.Services.AddAuth0WebAppAuthentication(options =>
+{
+    options.Domain = builder.Configuration["Auth0:Domain"];
+    options.ClientId = builder.Configuration["Auth0:ClientId"];
+});
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -18,6 +32,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
