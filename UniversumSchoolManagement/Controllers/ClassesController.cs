@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +12,12 @@ namespace UniversumSchoolManagement.Controllers
     public class ClassesController : Controller
     {
         private readonly UniversumDbContext _context;
+        private readonly INotyfService _notyfService;
 
-        public ClassesController(UniversumDbContext context)
+        public ClassesController(UniversumDbContext context, INotyfService notyfService)
         {
             _context = context;
+            _notyfService = notyfService;
         }
 
         // GET: Classes
@@ -55,8 +58,7 @@ namespace UniversumSchoolManagement.Controllers
         }
 
         // POST: Classes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,LecturerId,CourseId,Time")] Class @class)
@@ -89,8 +91,7 @@ namespace UniversumSchoolManagement.Controllers
         }
 
         // POST: Classes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,LecturerId,CourseId,Time")] Class @class)
@@ -208,6 +209,7 @@ namespace UniversumSchoolManagement.Controllers
                 enrollment.ClassId = classId;
                 enrollment.StudentId = studentId;
                 await _context.AddAsync(enrollment);
+                _notyfService.Success($"Student Enrolled Successfully");
             }
             else
             {
@@ -217,11 +219,12 @@ namespace UniversumSchoolManagement.Controllers
                 if (enrollment != null)
                 {
                     _context.Remove(enrollment);
+                    _notyfService.Warning($"Student Unenrolled Successfully");
                 }
             }
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageEnrollments),
-            new { classId = classId });
+            new { classId });
         }
 
         private bool ClassExists(int id)

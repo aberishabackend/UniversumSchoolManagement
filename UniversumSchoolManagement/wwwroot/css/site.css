@@ -8,10 +8,23 @@ a {
     color: #0077cc;
 }
 
+.bg-danger {
+    background-color: #FE0101 !important;
+}
+
+.btn-danger {
+    background-color: #FE0101 !important;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
+}
+
+.featurette img {
+    width: 80%; 
+    height: auto;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {

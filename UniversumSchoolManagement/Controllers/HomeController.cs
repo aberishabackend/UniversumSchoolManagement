@@ -20,14 +20,19 @@ namespace UniversumSchoolManagement.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
         {
             return View();
         }
 
-        public IActionResult About()
+        [Route("/StatusCodeError/{statusCode}")]
+        public IActionResult Error(int statusCode)
         {
-            return View();
+            if (statusCode == 404)
+            {
+                ViewBag.ErrorMessage = "404 Page Not Found Exception.";
+            }
+            return View("StatusCodeError");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
