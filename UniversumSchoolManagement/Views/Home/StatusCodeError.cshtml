@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found</title>
+    <style>
+        body, html {
+            height: 100%;
+        }
+
+        .error-container {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+            .error-container img {
+                width: 50%;
+                max-width: 300px;
+                height: auto;
+            }
+
+            .error-container h1 {
+                font-size: 3rem;
+                margin-top: 20px;
+            }
+
+            .error-container p {
+                font-size: 1.25rem;
+            }
+
+            .error-container a {
+                margin-top: 20px;
+                font-size: 1.25rem;
+            }
+    </style>
+</head>
+<body>
+    <div class="container error-container">
+        <!-- SVG Image -->
+        <img src="~/images/undraw_page_not_found_re_e9o6.svg" alt="Error Image">
+        <!-- Error Message -->
+        <h1>404 Not Found</h1>
+        <p>Oops! The page you are looking for does not exist.</p>
+        <a href="/" class="btn btn-primary">Go Back Home</a>
+    </div>
+</body>
+</html>

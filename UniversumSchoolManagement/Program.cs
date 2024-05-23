@@ -1,10 +1,12 @@
 using Auth0.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using UniversumSchoolManagement.Data;
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<UniversumDbContext>(options => 
     options.UseSqlServer(builder.Configuration
@@ -16,6 +18,11 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
     options.ClientId = builder.Configuration["Auth0:ClientId"];
 });
 builder.Services.AddControllersWithViews();
+builder.Services.AddNotyf(c => {
+    c.DurationInSeconds = 5;
+    c.IsDismissable = true;
+    c.Position = NotyfPosition.TopRight;
+});
 
 var app = builder.Build();
 
@@ -28,12 +35,16 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStatusCodePagesWithRedirects("/StatusCodeError/{0}");
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseNotyf();
 
 app.MapControllerRoute(
     name: "default",
