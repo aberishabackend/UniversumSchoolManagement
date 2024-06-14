@@ -17,7 +17,9 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
     options.Domain = builder.Configuration["Auth0:Domain"];
     options.ClientId = builder.Configuration["Auth0:ClientId"];
 });
+
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddNotyf(c => {
     c.DurationInSeconds = 5;
     c.IsDismissable = true;

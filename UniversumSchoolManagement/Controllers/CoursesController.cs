@@ -42,6 +42,7 @@ namespace UniversumSchoolManagement.Controllers
         }
 
         // GET: Courses/Create
+        [Authorize(Roles ="Admin")]
         public IActionResult Create()
         {
             return View();
@@ -50,6 +51,7 @@ namespace UniversumSchoolManagement.Controllers
         // POST: Courses/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Name,Code,Credits")] Course course)
         {
             if (ModelState.IsValid)
@@ -80,6 +82,7 @@ namespace UniversumSchoolManagement.Controllers
         // POST: Courses/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Code,Credits")] Course course)
         {
             if (id != course.Id)
@@ -111,6 +114,7 @@ namespace UniversumSchoolManagement.Controllers
         }
 
         // GET: Courses/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Courses == null)
@@ -131,6 +135,7 @@ namespace UniversumSchoolManagement.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Courses == null)

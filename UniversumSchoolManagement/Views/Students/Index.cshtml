@@ -6,9 +6,12 @@
 
 <h1>Students</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-success">Create New</a>
-</p>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-success">Create New</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -37,11 +40,14 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.DateOfBirth)
                 </td>
-                <td>
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                     <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
                     <button data-id="@item.Id" class="btn btn-danger deleteBtn" type="button">Delete</button>
                 </td>
+                }
             </tr>
         }
     </tbody>
@@ -54,7 +60,11 @@
 @section Scripts {
     <script>
         $(function () {
-            $('.table').DataTable();
+            $('.table').DataTable({
+                columnDefs: [
+                    { "defaultContent": "-", "targets": "_all" }
+                ]
+            });
 
             $('.deleteBtn').click(function (e) {
                 Swal.fire({
