@@ -55,7 +55,8 @@ namespace UniversumSchoolManagement.Controllers
         // POST: Students/Create
 
         [HttpPost]
-       
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,DateOfBirth")] Student student)
         {
             if (ModelState.IsValid)
@@ -86,7 +87,8 @@ namespace UniversumSchoolManagement.Controllers
         // POST: Students/Edit/5
 
         [HttpPost]
-       
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,DateOfBirth")] Student student)
         {
             if (id != student.Id)
@@ -137,7 +139,8 @@ namespace UniversumSchoolManagement.Controllers
 
         // POST: Students/Delete/5
         [HttpPost, ActionName("Delete")]
-       
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Students == null)

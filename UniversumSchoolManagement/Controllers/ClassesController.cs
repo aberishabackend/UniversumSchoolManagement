@@ -8,7 +8,7 @@ using UniversumSchoolManagement.Models;
 
 namespace UniversumSchoolManagement.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class ClassesController : Controller
     {
         private readonly UniversumDbContext _context;

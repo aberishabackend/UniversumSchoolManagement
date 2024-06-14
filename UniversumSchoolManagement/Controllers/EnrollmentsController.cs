@@ -44,6 +44,7 @@ namespace UniversumSchoolManagement.Controllers
         }
 
         // GET: Enrollments/Create
+
         public IActionResult Create()
         {
             ViewData["ClassId"] = new SelectList(_context.Classes, "Id", "Id");
@@ -54,6 +55,7 @@ namespace UniversumSchoolManagement.Controllers
         // POST: Enrollments/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,StudentId,ClassId,Grade")] Enrollment enrollment)
         {
             if (ModelState.IsValid)
@@ -89,6 +91,7 @@ namespace UniversumSchoolManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,StudentId,ClassId,Grade")] Enrollment enrollment)
         {
             if (id != enrollment.Id)
@@ -144,6 +147,7 @@ namespace UniversumSchoolManagement.Controllers
         // POST: Enrollments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Enrollments == null)
